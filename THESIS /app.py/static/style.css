@@ -1,0 +1,435 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almendra+SC&family=Quintessential&display=swap');
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    overflow-x: hidden;
+}
+
+a,
+a:link,
+a:visited {
+    text-decoration: none;
+     outline: none;
+    border: none;
+}
+
+ul,
+li { 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+section,
+span,
+p{
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+}
+
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.header {
+    background-image: url("Main.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.header-navbar{ 
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 0;
+}
+
+.header-menu ul {
+     position: absolute;
+     top: 15px;
+     left: 25px;
+    display: flex;
+    gap: 100px;
+}
+
+.header-menu ul {
+  width: 100%;
+  list-style: none; 
+  padding: 0;
+  margin: 0;
+  display: flex; 
+  justify-content: center; 
+  gap: 70px; 
+}
+
+.header-menu ul li a {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    display: inline;
+}
+
+
+.header-text{
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+     position: absolute;
+  top: 300px; 
+  left: 52%;
+  transform: translateX(-50%);
+  font-family: Herr Von Mullerhoff, cursive;
+  font-size: 1.5rem; 
+  font-weight: 50;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    line-height: 2;
+
+}
+
+h1{
+    font-size: 4.8rem;
+    font-weight: 90;
+    line-height: 0.9;
+    letter-spacing: 3px;
+    font-family: Herr Von Mullerhoff, cursive;
+}
+
+h3{
+    margin-bottom: 5px;   
+    font-size: 22px;
+}
+
+.btn-coffee{
+    display: block;
+    background-color: #313130;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-top-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-coffee::after{
+    content: "Content";
+    position:absolute;
+    top: 100%;
+    left: 0;
+    background-color: #8b6313;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .5s;
+}
+
+.btn-coffee:hover::after{
+    top: 0;
+}
+
+/*ABOUT*/
+
+.about{
+    margin-bottom: 150px;
+}
+
+.about-title{
+    margin: 60px 0;
+}
+
+.about-title h2{
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    color: #8b6313;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.about-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.about-img{
+    width: 150%;
+}
+
+.about-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-text{
+    width: 60%;
+}
+
+h4{
+    position:absolute;
+    right: 20px;
+    top: 120%;
+    left: 45%;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 50px;
+    color: #8b6313;
+    font-family: Herr Von Mullerhoff, cursive;
+    font-weight: 100;
+
+}
+
+.about-text p{
+    font-size: 20px;
+    text-align: center;
+}
+
+
+/*PORTFOLIO*/
+
+
+.portfolio {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.portfolio-item {
+  position: relative;
+  width: 25%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: top 0.5s ease, opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.portfolio-item:hover .overlay {
+  top: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.portfolio-item:hover img {
+  transform: scale(1.1);
+}
+
+.bookclub-event {
+  background: #8b6313cc;
+  color: white;
+  padding: 20px;
+  margin: 5px auto 20px auto;
+  max-width: 400px;
+  border-radius: 15px;
+  font-family: 'Quintessential', cursive;
+  box-shadow: 0 0 10px #5a3d01;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.bookclub-event:hover {
+  transform: scale(1.05);
+}
+
+#bookclub .container {
+  transform: translateY(-64px);
+}
+
+.reservation-form {
+  max-width: 400px;
+  margin: 40px auto 80px auto;
+  padding: 25px;
+  background: #f3e5ab;
+  border-radius: 15px;
+  font-family: 'Almendra SC', serif;
+}
+
+.reservation-form input, 
+.reservation-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #8b6313;
+}
+
+.reservation-form button {
+  background-color: #313130;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+
+.reservation-form button:hover {
+  background-color: #8b6313;
+}
+
+
+
+/*PORTFOLIO FINISH*/
+
+/*CONTACT start*/
+
+.contact {
+  padding: 10px 0;
+  text-align: center;
+  margin: 0 auto;
+}
+
+
+.page-title h2 {
+  color: #5a330b;
+  font-weight: 600;
+  font-size: 30px;
+  margin-bottom: 5px;
+  letter-spacing: 1.2px;
+}
+
+.page-title h2::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: #3a2a07;
+  margin: 0 auto 30px auto;
+}
+
+.contact-content {
+  display: flex;
+  justify-content: center;  /* Ortala */
+  align-items: flex-start;
+  margin-top: 70px;
+  flex-wrap: wrap;
+  gap: 140px; /* Elemanlar arasına boşluk koyar */
+}
+
+
+.item {
+  /* flex-basis: 30%; */
+  width: 200px; /* Sabit genişlik veya istediğin değer */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 120px;
+}
+
+
+.item i {
+  font-size: 15px;
+  color: #090501;
+}
+
+.item p {
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+  white-space: pre-line;
+}
+
+
+/*CONTACT finish*/
+
+
+/*footer start*/
+
+.footer h2{
+     width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    color: #8b6313;
+    font-size: 30px;
+    font-weight: 600;
+    padding: 60px 0;
+}
+
+
+.footer h2::after{
+    content: "";
+    width: 30px;
+    height: 3px;
+    background-color: #313130;
+    display: block;
+    margin: 10px auto 0 auto;  
+}
+
+.footer{
+    background-color: #000000;
+}
+
+.footer-copyright{
+    color: #ffffff;
+    text-align: center;
+    flex-basis: 55%;
+    line-height: 2;
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+
+.footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer-social i{
+   color: #ffffff;
+   margin-bottom: 100px;
+   font-size: 28px;
+   padding: 0 100px;
+}
+
+.footer-social:first-child{
+   margin-left: 70px;
+}
+
+
