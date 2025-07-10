@@ -2,11 +2,11 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-// Database connection settings — UPDATE THESE!
+
 $host = 'localhost';
-$dbname = 'chapter_one_db'; // <-- Your database name
-$username = 'root';         // Default for MAMP
-$password = 'root';         // Default for MAMP (NOT empty)
+$dbname = 'chapter_one_db'; 
+$username = 'root';         
+$password = 'root';        
 
 try {
     // Connect using PDO
@@ -25,7 +25,9 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    $which_event = trim($_POST['which_event_will_you_be_attending'] ?? null);
     $expectations = trim($_POST['expectations'] ?? '');
+
 
     if (!$name || !$email) {
         echo json_encode([
@@ -36,13 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        // Prepare and insert data
-        $stmt = $pdo->prepare("INSERT INTO participants (name, email, expectations) VALUES (?, ?, ?)");
-        $stmt->execute([$name, $email, $expectations]);
+        
+        $stmt = $pdo->prepare("INSERT INTO participants (name, email, expectations, which_event_will_you_be_attending) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $expectations, $which_event]);
 
         echo json_encode([
             'status' => 'success',
-            'message' => 'Registration successful and saved to database!'
+            'message' => 'Registration successful!'
         ]);
         exit;
     } catch (PDOException $e) {
@@ -60,3 +62,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 ?>
+
