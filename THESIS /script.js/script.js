@@ -1,91 +1,66 @@
-// script.js
+document.addEventListener('DOMContentLoaded', function () {
+    emailjs.init("BxxlzhhPWsSGtp_V2");
 
-document.addEventListener('DOMContentLoaded', function() {
+
   const reservationForm = document.getElementById('reservationForm');
-  const participantList = document.getElementById('participantList');
 
   if (reservationForm) {
-      reservationForm.addEventListener('submit', function(event) {
-          event.preventDefault(); // Prevent default form submission
+    reservationForm.addEventListener('submit', function (event) {
+      event.preventDefault();
 
-          const nameInput = document.getElementById('name');
-          const emailInput = document.getElementById('email');
-          const expectationsInput = document.getElementById('expectations');
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const expectations = document.getElementById('expectations').value.trim() || "N/A";
+      const whichEvent = document.getElementById('which_event_will_you_be_attending').value.trim() || null;
 
-          // Using FormData is often easier when sending to PHP with $_POST
-          const formData = new FormData();
-          formData.append('name', nameInput.value.trim());
-          formData.append('email', emailInput.value.trim());
-          formData.append('expectations', expectationsInput.value.trim());
+      if (!name || !email) {
+        alert("Please fill in the name and email fields.");
+        return;
+      }
 
-          // Basic client-side validation
-          if (!formData.get('name') || !formData.get('email')) {
-              alert('Please fill in your Full Name and Email Address.');
-              return;
-          }
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('which_event_will_you_be_attending', whichEvent);
+      formData.append('expectations', expectations);
 
-          // --- The URL should point to your PHP script ---
-          // Make sure your project is in htdocs, e.g., htdocs/chapteronecafe/
-          // Then the URL will be http://localhost/chapteronecafe/register.php
-          fetch('register.php', { // ADJUST THIS URL
-              method: 'POST',
-              body: formData, // Send as FormData, PHP will populate $_POST
-              // No 'Content-Type' header needed when sending FormData;
-              // the browser will set it correctly to 'multipart/form-data'
+      // ✅ Veritabanına kayıt
+      fetch('register.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          alert(data.message || 'Registration successful!');
+
+          // ✅ QR kodu oluştur
+          const qrText = `${name} - ChapterOneCafe30`;
+          const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrText)}`;
+
+
+          // ✅ Email gönder
+          emailjs.send("service_434ga9w", "template_qc1gz1i", {
+            user_name: name,
+            to_email: email,
+            email: email, 
+            expectations: expectations,
+            which_event_will_you_be_attending: whichEvent,
+            qr_code: qrImageUrl
           })
-          .then(response => {
-              if (!response.ok) {
-                  // Try to parse error as JSON, if not, use status text
-                  return response.json().catch(() => {
-                      throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
-                  }).then(errData => {
-                      throw new Error(errData.message || `HTTP error! Status: ${response.status}`);
-                  });
-              }
-              return response.json();
+          .then(function () {
+            console.log("✅ Email sent.");
+            reservationForm.reset();
           })
-          .then(data => {
-              console.log('Server Response:', data);
-              if (data.status === "success") {
-                  alert(data.message || 'Registration successful!');
-                  // Optionally, update UI or clear form
-                  // const listItem = document.createElement('li');
-                  // listItem.textContent = `Name: ${formData.get('name')}, Email: ${formData.get('email')}`;
-                  // if (participantList) {
-                  //     participantList.appendChild(listItem);
-                  // }
-                  reservationForm.reset();
-              } else {
-                  alert(`Registration failed: ${data.message || 'Unknown error'}`);
-              }
-          })
-          .catch((error) => {
-              console.error('Fetch Error:', error);
-              alert(`An error occurred: ${error.message}`);
+          .catch(function (error) {
+            console.error("❌ EmailJS error:", error);
+            alert("❌ Email could not be sent.");
           });
 
-          // --- EmailJS code can remain if you want to use it separately ---
-          /*
-          (function(){
-            emailjs.init({ publicKey: "kDcfDCYEX1L5dZIzL" }); // Your EmailJS Public Key
-          })();
-          const templateParams = {
-              from_name: formData.get('name'),
-              from_email: formData.get('email'),
-              message: `Expectations: ${formData.get('expectations') || 'N/A'}`
-          };
-          emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-              .then(function(response) {
-                 console.log('EmailJS SUCCESS!', response.status, response.text);
-              }, function(error) {
-                 console.log('EmailJS FAILED...', error);
-              });
-          */
-          // --- End of EmailJS part ---
-      });
+        } else {
+          alert("❌ Registration failed: " + data.message);
+        }
+      })
+    });
   }
-
-  // Your existing ScrollReveal and other JS code can remain here
-  // window.sr = ScrollReveal();
-  // sr.reveal('.anime-left',{ /* ... */ });
 });
